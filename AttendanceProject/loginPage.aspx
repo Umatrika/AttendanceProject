@@ -15,6 +15,8 @@
         <br />
         <asp:Button id="btnLogin" runat="server" Text="Login"/>
         <br />
+
+
         <br />
         <asp:HyperLink ID="lnkRegister" runat="server" Text="Register A New User" ForeColor="#6600FF" NavigateUrl="~/RegisterPage.aspx"></asp:HyperLink>
     </div>
