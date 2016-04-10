@@ -12,7 +12,10 @@
     <form id="form1" runat="server">
     <div>
         <div id="header" style="background-color:maroon; height: 50px; width:auto; text-align:center;">
-                               
+                     
+            
+            
+                      
         </div>            
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
