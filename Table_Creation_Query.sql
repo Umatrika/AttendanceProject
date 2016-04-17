@@ -1,23 +1,4 @@
-﻿
-/*
-DROP TABLE [dbo].[Instructor]
-DROP TABLE [dbo].[Student]
-DROP TABLE [dbo].[Subject]
-DROP TABLE [dbo].[Subject_Instructor]
-DROP TABLE [dbo].[Subject_Student]
-DROP TABLE [dbo].[Attendance]
-*/
-
-/*
-SELECT TOP 100 * FROM [dbo].[Instructor]
-SELECT TOP 100 * FROM [dbo].[Student]
-SELECT TOP 100 * FROM [dbo].[Subject]
-SELECT TOP 100 * FROM [dbo].[Subject_Student]
-SELECT TOP 100 * FROM [dbo].[Subject_Instructor]
-SELECT TOP 100 * FROM [dbo].[Attendance]
-*/
---[dbo].[Instructor]
-
+﻿GO
 CREATE TABLE [dbo].[Instructor]
 (
 
