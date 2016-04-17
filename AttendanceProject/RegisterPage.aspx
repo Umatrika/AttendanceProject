@@ -4,4 +4,3 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:Label ID="lblMessage" runat="server" Text="Register Page"></asp:Label>
 </asp:Content>
-uma
