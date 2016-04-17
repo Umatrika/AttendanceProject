@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DB_UC.mdf" />
+    <Content Include="App_Data\DB_UC_log.ldf">
+      <DependentUpon>DB_UC.mdf</DependentUpon>
+    </Content>
     <Content Include="loginPage.aspx" />
     <Content Include="RegisterPage.aspx" />
     <Content Include="StyleSheet.css" />
