@@ -58,67 +58,22 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.Label lblAdminLogin;
         
         /// <summary>
-        /// lblAdminUserName control.
+        /// lblAdminMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAdminUserName;
+        protected global::System.Web.UI.WebControls.Label lblAdminMessage;
         
         /// <summary>
-        /// txtAdminUserName control.
+        /// btnAdminOk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAdminUserName;
-        
-        /// <summary>
-        /// lblAdminPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAdminPassword;
-        
-        /// <summary>
-        /// txtAdminPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAdminPassword;
-        
-        /// <summary>
-        /// btnAdminSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAdminSubmit;
-        
-        /// <summary>
-        /// btnAdminClose control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAdminClose;
-        
-        /// <summary>
-        /// lblAdminLoginError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAdminLoginError;
+        protected global::System.Web.UI.WebControls.Button btnAdminOk;
         
         /// <summary>
         /// lblErrorMessage control.
@@ -148,6 +103,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.TextBox txtUserName;
         
         /// <summary>
+        /// userNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator userNameValidator;
+        
+        /// <summary>
         /// lblPassword control.
         /// </summary>
         /// <remarks>
@@ -164,6 +128,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
+        
+        /// <summary>
+        /// passwordValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator passwordValidator;
         
         /// <summary>
         /// btnLogin control.
@@ -229,6 +202,24 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.TextBox txtNewUserFirstName;
         
         /// <summary>
+        /// NewUserFirstNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewUserFirstNameValidator;
+        
+        /// <summary>
+        /// firstNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator firstNameValidator;
+        
+        /// <summary>
         /// lblNewUserLastName control.
         /// </summary>
         /// <remarks>
@@ -245,6 +236,24 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNewUserLastName;
+        
+        /// <summary>
+        /// NewUserLastNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewUserLastNameValidator;
+        
+        /// <summary>
+        /// lastNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator lastNameValidator;
         
         /// <summary>
         /// lblNewUserEmail control.
@@ -265,6 +274,24 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.TextBox txtNewUserEmail;
         
         /// <summary>
+        /// NewUserEmailValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewUserEmailValidator;
+        
+        /// <summary>
+        /// emailValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator emailValidator;
+        
+        /// <summary>
         /// lblNewUserPassword control.
         /// </summary>
         /// <remarks>
@@ -283,22 +310,22 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.TextBox txtNewUserPassword;
         
         /// <summary>
-        /// lblNewUserConfirmPassword control.
+        /// NewUserPasswordValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNewUserConfirmPassword;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewUserPasswordValidator;
         
         /// <summary>
-        /// txtNewUserConfirmPassword control.
+        /// regVal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewUserConfirmPassword;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regVal;
         
         /// <summary>
         /// btnNewUserSubmit control.
