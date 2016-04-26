@@ -22,15 +22,6 @@ namespace AttendanceProject {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// lblSignedUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSignedUser;
-        
-        /// <summary>
         /// btnSignOut control.
         /// </summary>
         /// <remarks>
@@ -49,67 +40,13 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.Label lblStudentErrorMessage;
         
         /// <summary>
-        /// SidePanel control.
+        /// pnlAddStudent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel SidePanel;
-        
-        /// <summary>
-        /// imgAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgAccount;
-        
-        /// <summary>
-        /// dashboard control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton dashboard;
-        
-        /// <summary>
-        /// imgCourse control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgCourse;
-        
-        /// <summary>
-        /// imgCalander control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgCalander;
-        
-        /// <summary>
-        /// imgInbox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgInbox;
-        
-        /// <summary>
-        /// pnlContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlContent;
+        protected global::System.Web.UI.WebControls.Panel pnlAddStudent;
         
         /// <summary>
         /// divAddStudent control.
@@ -175,6 +112,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentFirstNameValidator;
         
         /// <summary>
+        /// lastNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator lastNameValidator;
+        
+        /// <summary>
         /// txtStudentLastName control.
         /// </summary>
         /// <remarks>
@@ -193,6 +139,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentLastNameValidator;
         
         /// <summary>
+        /// studentLastNameValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator studentLastNameValidation;
+        
+        /// <summary>
         /// txtStudentEmail control.
         /// </summary>
         /// <remarks>
@@ -209,6 +164,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentEmailValidator;
+        
+        /// <summary>
+        /// studentEmailValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator studentEmailValidation;
         
         /// <summary>
         /// txtStudentDOB control.
@@ -256,6 +220,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentMobileNumberValidator;
         
         /// <summary>
+        /// StudentMobileValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator StudentMobileValidation;
+        
+        /// <summary>
         /// txtStudentAddress control.
         /// </summary>
         /// <remarks>
@@ -292,6 +265,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentCityValidator;
         
         /// <summary>
+        /// studentCityCalidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator studentCityCalidation;
+        
+        /// <summary>
         /// txtStudentState control.
         /// </summary>
         /// <remarks>
@@ -310,6 +292,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentStateValidator;
         
         /// <summary>
+        /// studentStateValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator studentStateValidation;
+        
+        /// <summary>
         /// txtStudentZip control.
         /// </summary>
         /// <remarks>
@@ -326,6 +317,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStudentZipValidator;
+        
+        /// <summary>
+        /// studentZipValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator studentZipValidation;
         
         /// <summary>
         /// txtStudentNotes control.
@@ -353,6 +353,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStudentCancel;
+        
+        /// <summary>
+        /// Panel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel2;
         
         /// <summary>
         /// divAddInstructor control.
@@ -427,6 +436,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator instructorFirstNameValidator;
         
         /// <summary>
+        /// firstNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator firstNameValidator;
+        
+        /// <summary>
         /// txtInstructorLastName control.
         /// </summary>
         /// <remarks>
@@ -445,6 +463,15 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator instructorLastNameValidator;
         
         /// <summary>
+        /// lastNameValdator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator lastNameValdator;
+        
+        /// <summary>
         /// txtInstructorEmail control.
         /// </summary>
         /// <remarks>
@@ -461,6 +488,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator instructorEmailValidator;
+        
+        /// <summary>
+        /// emailValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator emailValidator;
         
         /// <summary>
         /// txtInstructorPassword control.
@@ -497,6 +533,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInstructorCancel;
+        
+        /// <summary>
+        /// Panel3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel3;
         
         /// <summary>
         /// divAddCourse control.
@@ -569,6 +614,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtSubjectNameValidaor;
+        
+        /// <summary>
+        /// SubjectNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator SubjectNameValidator;
         
         /// <summary>
         /// ddlSelectCourse control.
