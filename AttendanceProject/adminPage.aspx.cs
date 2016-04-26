@@ -31,7 +31,8 @@ namespace AttendanceProject
 
         protected void btnSignOut_Click(object sender, EventArgs e)
         {
-
+            Session["user"] = "";
+            Response.Redirect("loginPage.aspx");
         }
 
         protected void addStudent_Click(object sender, ImageClickEventArgs e)
@@ -39,11 +40,6 @@ namespace AttendanceProject
             string queryString = "loginPage.aspx";
             string newWin = "window.open('" + queryString + "');";
             ClientScript.RegisterStartupScript(this.GetType(), "pop", newWin, true);
-        }
-
-        protected void addInstructor_Click(object sender, ImageClickEventArgs e)
-        {
-            
         }
 
         protected void btnInstructorSubmit_Click(object sender, EventArgs e)
@@ -133,12 +129,38 @@ namespace AttendanceProject
 
         protected void btnCourseSubmit_Click(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btnSubmit_Click(object sender, EventArgs e)
-        {
-
+            string subjectName = txtSubjectName.Text;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            myConnection.Open();
+            string selectSubjectStr = "SELECT Count(*) FROM [dbo].[Subject] WHERE SubjectName = @subject";
+            SqlCommand myCommand = new SqlCommand(selectSubjectStr, myConnection);
+            myCommand.Parameters.AddWithValue("@subject", subjectName);
+            Int32 return_status = (Int32)myCommand.ExecuteScalar();
+            if (return_status > 0)
+            {
+                lblStudentErrorMessage.Text = "Subject Exists Already.";
+                lblStudentErrorMessage.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                string departmantName = ddlSelectCourse.SelectedItem.ToString();
+                int departmentId = Convert.ToInt32(ddlSelectCourse.SelectedValue);
+                string decsription = txtCourseDescription.Text;
+                string insertSubjectStr = "insert into [dbo].[Subject]([SubjectName],[DepatmentName],[DepatmentID],[Description]) values (@subjectname, @departmentName, @departmentId, @description)";
+                SqlCommand insertSubjectCmd = new SqlCommand(insertSubjectStr, myConnection);
+                insertSubjectCmd.Parameters.AddWithValue("@subjectname", subjectName);
+                insertSubjectCmd.Parameters.AddWithValue("@departmentName", departmantName);
+                insertSubjectCmd.Parameters.AddWithValue("@departmentId", departmentId);
+                insertSubjectCmd.Parameters.AddWithValue("@description", decsription);
+                int return_value = insertSubjectCmd.ExecuteNonQuery();
+                if (return_value > 0)
+                {
+                    lblStudentErrorMessage.Text = "Subject Added Sucessfully";
+                }
+               
+            }
+            myConnection.Close();
         }
     }
 }
