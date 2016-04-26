@@ -1,5 +1,5 @@
 C:\Users\Uma Phani\Documents\GitHub\AttendanceProject\AttendanceProject\bin\AttendanceProject.dll
 C:\Users\Uma Phani\Documents\GitHub\AttendanceProject\AttendanceProject\bin\AttendanceProject.pdb
-C:\Users\Uma Phani\Documents\GitHub\AttendanceProject\AttendanceProject\obj\Debug\AttendanceProject.csprojResolveAssemblyReference.cache
 C:\Users\Uma Phani\Documents\GitHub\AttendanceProject\AttendanceProject\obj\Debug\AttendanceProject.dll
 C:\Users\Uma Phani\Documents\GitHub\AttendanceProject\AttendanceProject\obj\Debug\AttendanceProject.pdb
+C:\Users\Uma Phani\Documents\GitHub\AttendanceProject\AttendanceProject\obj\Debug\AttendanceProject.csprojResolveAssemblyReference.cache

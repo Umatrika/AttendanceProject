@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="AttendanceProject.MasterPage" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxControlToolkit" %>
 
 <!DOCTYPE html>
 
@@ -11,15 +12,12 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <div id="header" style="background-color:maroon; height: 50px; width:auto; text-align:center;">
-                     
-            
-            
-                      
+        <div id="header" style="background-color:maroon; height: 50px; width:auto; text-align:center; color:white; font-family:Arial">
+           <h2>Student Attendance Management</h2>                    
         </div>            
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" >
         </asp:ContentPlaceHolder>
-        <div id="footer" style="background-color:maroon; height: 20px; width:auto; text-align:center;">
+        <div id="footer" style="background-color:maroon; height: 20px; width:auto; text-align:center; color:white;">
             <h5>Copyright 2016</h5>
         </div>
     </div>

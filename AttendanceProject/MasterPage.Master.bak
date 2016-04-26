@@ -1,0 +1,28 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="AttendanceProject.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div id="header" style="background-color:maroon; height: 50px; width:auto; text-align:center;">
+                     
+            
+            
+                      
+        </div>            
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <div id="footer" style="background-color:maroon; height: 20px; width:auto; text-align:center;">
+            <h5>Copyright 2016</h5>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
