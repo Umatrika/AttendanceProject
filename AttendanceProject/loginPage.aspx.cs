@@ -19,6 +19,7 @@ namespace AttendanceProject
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             lblErrorMessage.Text = "";
+            Session["user"] = txtUserName.Text;
             if (txtUserName.Text == "admin" && txtPassword.Text == "123")
             {
                 Response.Redirect("adminPage.aspx");
@@ -39,7 +40,6 @@ namespace AttendanceProject
                 lblErrorMessage.Text = "";
                 if (return_status == 1)
                 {
-                    Session["user"] = txtUserName.Text;
                     Response.Redirect("instructorPage.aspx");
                 }
                 else
@@ -69,7 +69,7 @@ namespace AttendanceProject
             SqlCommand myCommand = new SqlCommand(login_command, myConnection);
             myCommand.Parameters.AddWithValue("@Email", email);
             Int32 return_status = (Int32)myCommand.ExecuteScalar();
-            lblErrorMessage.Text = "Connection Opened" + return_status;
+           // lblErrorMessage.Text = "Connection Opened" + return_status;
             myConnection.Close();
             lblErrorMessage.Text = "";
             if (return_status == 1) {

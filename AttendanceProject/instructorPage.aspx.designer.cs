@@ -13,6 +13,15 @@ namespace AttendanceProject {
     public partial class instructorPage {
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// ddlSelectCourse control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,33 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        
+        /// <summary>
+        /// btnLogOut control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLogOut;
+        
+        /// <summary>
+        /// btnAddNewRecord control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddNewRecord;
+        
+        /// <summary>
+        /// ModalPopupExtenderRegister control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtenderRegister;
         
         /// <summary>
         /// pnlAddAttendence control.
@@ -67,13 +103,13 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.Table addAttendence;
         
         /// <summary>
-        /// ddlSelectInstructor control.
+        /// ddlSelectSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSelectInstructor;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSelectSubject;
         
         /// <summary>
         /// txtSelectDate control.
@@ -83,6 +119,24 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSelectDate;
+        
+        /// <summary>
+        /// cal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender cal;
+        
+        /// <summary>
+        /// selectDateValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator selectDateValidator;
         
         /// <summary>
         /// ddlSelectStudent control.
@@ -103,6 +157,24 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.TextBox txtHours;
         
         /// <summary>
+        /// hourValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator hourValidator;
+        
+        /// <summary>
+        /// RangeValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RangeValidator1;
+        
+        /// <summary>
         /// btnAttendanceSubmit control.
         /// </summary>
         /// <remarks>
@@ -110,6 +182,15 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAttendanceSubmit;
+        
+        /// <summary>
+        /// btnAttendenceCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAttendenceCancel;
         
         /// <summary>
         /// lblStatusMessage control.
@@ -121,13 +202,31 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.Label lblStatusMessage;
         
         /// <summary>
-        /// GridviewAttendance control.
+        /// btnShowAllRecord control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridviewAttendance;
+        protected global::System.Web.UI.WebControls.Button btnShowAllRecord;
+        
+        /// <summary>
+        /// btnShowFiveFewest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShowFiveFewest;
+        
+        /// <summary>
+        /// btnShowFiveMost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShowFiveMost;
         
         /// <summary>
         /// btnDeleteRecord control.
@@ -137,5 +236,14 @@ namespace AttendanceProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDeleteRecord;
+        
+        /// <summary>
+        /// GridviewAttendance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridviewAttendance;
     }
 }
