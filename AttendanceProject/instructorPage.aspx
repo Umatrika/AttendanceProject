@@ -52,7 +52,6 @@
             <asp:Button id="btnDropDropSelectOk" runat="server" Text="OK" OnClick="btnDropDropSelectOk_Click"/>
         </div>
         <div id="searchDiv" style="float:right;">
-            <asp:TextBox ID="txtSearch" runat="server" TextMode="Search" Text="Search Student"></asp:TextBox>
             <asp:Button id="btnLogOut" runat="server" Text="Sign Out" OnClick="btnLogOut_Click"/>
         </div>        
     </div>
@@ -60,7 +59,7 @@
     <div id="AttendenceDiv" style="height:450px; font-family:Arial;">
 
         <div id="showAttendenceDiv" align="center" style="margin-top:50px; font-family:Arial;">
-            <asp:Button id="btnAddNewRecord" runat="server" Text="Add New Record" onclick="btnAddNewRecord_Click"/>
+            <asp:Button id="btnAddNewRecord" runat="server" Text="Add New Record"/>
                    
             <ajaxControlToolkit:ModalPopupExtender id="ModalPopupExtenderRegister" runat="server" popupcontrolId="pnlAddAttendence" TargetControlID="btnAddNewRecord"
                 cancelControlId="btnAttendenceCancel" BackgroundCssClass="modalBackground" >
@@ -122,11 +121,10 @@
             <asp:Button id="btnShowAllRecord" runat="server" Text="Show All" OnClick="btnShowAllRecord_Click"/>
             <asp:Button id="btnShowFiveFewest" runat="server" Text="Show Bottom 5" onclick="btnShowFiveFewest_Click"/>
             <asp:Button id="btnShowFiveMost" runat="server" Text="Show Top 5" OnClick="btnShowFiveMost_Click"/>
-            <asp:Button id="btnDeleteRecord" runat="server" Text="Delete Record" OnClick="btnDeleteRecord_Click"/>
             <br />
             <asp:GridView ID ="GridviewAttendance" runat="server" allowpaging="True" CellPadding="4" BackColor="white" BorderWidth="1px" 
             ForeColor="black" BorderColor="#3366CC" AutoGenerateColumns="false" HeaderStyle-CssClass="grdView_HeaderStyle"
-            PageSize="10" OnPageIndexChanging="GridviewAttendance_PageIndexChanging"
+            PageSize="10" OnPageIndexChanging="GridviewAttendance_PageIndexChanging" RowStyle-HorizontalAlign="Center"
             OnRowCancelingEdit="gdview_RowCancelingEdit" OnRowDeleting="gdview_RowDeleting"
             OnRowEditing="gdview_RowEditing" OnRowUpdating="gdview_RowUpdating" HorizontalAlign="Center" RowStyle-Wrap="false">
                             
@@ -134,56 +132,58 @@
             <HeaderStyle Font-Bold="True" BackColor="maroon"></HeaderStyle>
                     
             <Columns>
-                    <asp:TemplateField HeaderText="Select">
+                    <asp:TemplateField HeaderText="Attendance ID">
                         <ItemTemplate>
-                            <asp:CheckBox id="chkBoxAttendence" runat="server"/>
+                            <asp:Label ID="lblAttendanceID" runat="server" Text='<%# Eval("Attendance_ID") %>'></asp:Label>
                         </ItemTemplate>
-                        <EditItemTemplate>                        
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtAttendanceId" runat="server" Text='<%# Bind("Attendance_ID") %>' Enabled="false"></asp:TextBox>                      
                         </EditItemTemplate>
                         <ItemStyle Width="100px" />
                     </asp:TemplateField>      
              
                     <asp:TemplateField HeaderText="First Name">
                         <ItemTemplate>
-                            <%# Eval("FirstName")%>    
+                            <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("FirstName") %>'></asp:Label> 
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox width="100%" runat="server" ID="txtStudent" text='<%# Bind("FirstName") %>'/>
+                            <asp:TextBox width="100%" runat="server" ID="txtFirstName" text='<%# Bind("FirstName") %>' Enabled="false"/>
                         </EditItemTemplate>
                         <ItemStyle Width="100px" />
                     </asp:TemplateField>
                 
                     <asp:TemplateField HeaderText="Last Name">
                         <ItemTemplate>
-                            <%# Eval("LastName")%>    
+                            <asp:Label ID="lblLastName" runat="server" Text='<%# Eval("LastName") %>'></asp:Label> 
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox width="100%" runat="server" ID="txtStudent" text='<%# Bind("LastName") %>'/>
+                            <asp:TextBox width="100%" runat="server" ID="txtLastName" text='<%# Bind("LastName") %>' Enabled="false"/>
                         </EditItemTemplate>
                         <ItemStyle Width="100px" />
                     </asp:TemplateField>            
                                                                  
                     <asp:TemplateField HeaderText="Hours">
                         <ItemTemplate>
-                            <%# Eval("Hours")%>    
+                            <asp:Label ID="lblHours" runat="server" Text='<%# Eval("Hours") %>'></asp:Label> 
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox width="100%" runat="server" ID="txtSubjectName" text='<%# Bind("Hours") %>'/>
+                            <asp:TextBox width="100%" runat="server" ID="txtHours" text='<%# Bind("Hours") %>'/>
                         </EditItemTemplate>
                         <ItemStyle Width="100px" />
                     </asp:TemplateField>
                 
                     <asp:TemplateField HeaderText="Date">
                         <ItemTemplate>
-                            <%# Eval("AttendanceDT")%>
+                            <asp:Label ID="lblDate" runat="server" Text='<%# Eval("AttendanceDT", "{0:MM/dd/yyyy}") %>'></asp:Label>                           
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox width="100%"  runat="server" ID="txtDate" text='<%# Bind("AttendanceDT") %>' />
+                            <asp:TextBox width="100%"  runat="server" ID="txtDate" text='<%# Bind("AttendanceDT", "{0:MM/dd/yyyy}") %>' />
+                            <ajaxControlToolkit:CalendarExtender id="calEdit" TargetControlID="txtDate" Format="MM/dd/yyyy" runat="server"/>
                         </EditItemTemplate>
                         <ItemStyle Width="100px" />
                     </asp:TemplateField>  
             
-                    <asp:CommandField ButtonType="Button" ShowEditButton="true" ShowCancelButton="true"/>                            
+                    <asp:CommandField ButtonType="Button" ShowEditButton="true" ShowCancelButton="true" ShowDeleteButton="true"/>                            
                 </Columns>   
             </asp:GridView>            
         </div>

@@ -24,27 +24,26 @@ namespace AttendanceProject
                 myConnection.Open();
                 SqlCommand select_instructor_cmd = new SqlCommand(select_instructor, myConnection);
                 SqlDataReader rd_instructor = select_instructor_cmd.ExecuteReader();
-                //ddlSelectInstructor.DataSource = rd_instructor;
-                //ddlSelectInstructor.DataBind();
                 
-                string select_student = "Select Student_ID, FirstName from Student";
+                string select_student = "Select Student_ID, FirstName from Student Where Active='Y'";
                 SqlCommand select_student_cmd = new SqlCommand(select_student, myConnection);
                 SqlDataReader rd_student = select_student_cmd.ExecuteReader();
                 ddlSelectStudent.DataSource = rd_student;
                 ddlSelectStudent.DataBind();
                 ddlSelectStudent.Items.Insert(0, new ListItem("Select All", "0"));
 
-                string select_subject = "select Subject_ID, SubjectName from Subject";
+                string select_subject = "select Subject_ID, SubjectName from Subject Where Active='Y'";
                 SqlCommand select_subject_cmd = new SqlCommand(select_subject, myConnection);
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = select_subject_cmd;
                 DataSet ds = new DataSet();
                 da.Fill(ds);
                 ddlSelectSubject.DataSource = ds;
-                ddlSelectSubject.DataBind();
+                ddlSelectSubject.DataBind();                
 
                 ddlSelectCourse.DataSource = ds;
                 ddlSelectCourse.DataBind();
+                ddlSelectCourse.Items.Insert(0, new ListItem("Select All", "0"));
 
                 myConnection.Close();
                 ShowStudentAttendance();
@@ -53,7 +52,27 @@ namespace AttendanceProject
 
         protected void btnDropDropSelectOk_Click(object sender, EventArgs e)
         {
-            ShowStudentAttendance();
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
+            myConnection.Open();
+            string select_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id AND Subject_ID=@subjectId";
+            string select_All_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id";
+            Int32 ddlSelectedValue = Convert.ToInt32(ddlSelectCourse.SelectedValue);
+            SqlCommand select;
+            if(ddlSelectedValue == 0)
+                select = new SqlCommand(select_All_string, myConnection);
+            else
+                select = new SqlCommand(select_string, myConnection);
+            select.Parameters.AddWithValue("@instructor_id", instructor_ID);
+            select.Parameters.AddWithValue("@subjectId", ddlSelectedValue);
+            
+            DataSet ds = new DataSet();
+            SqlDataAdapter sdp = new SqlDataAdapter(select);
+            sdp.Fill(ds);
+
+            GridviewAttendance.DataSource = ds.Tables[0];
+            GridviewAttendance.DataBind();
+            //GridviewAttendance.EditIndex = 1;
+            myConnection.Close();            
         }
 
         protected void ShowStudentAttendance()
@@ -73,8 +92,7 @@ namespace AttendanceProject
                 int instructor_id = Convert.ToInt32(reader["Instructor_ID"]);
                 instructor_ID = instructor_id;
 
-                string select_string = "select A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id";
-                //SqlCommand select = new SqlCommand("SELECT * from attendance", myConnection);
+                string select_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND A.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id order by A.Attendance_ID desc";
                 SqlCommand select = new SqlCommand(select_string, myConnection);
                 select.Parameters.AddWithValue("@instructor_id", instructor_id);
                 DataSet ds = new DataSet();
@@ -98,16 +116,69 @@ namespace AttendanceProject
         }
 
         protected void gdview_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        { }
+        {
+            GridViewRow row = GridviewAttendance.Rows[e.RowIndex];
+            
+            Label lblFirstNameStr = row.FindControl("lblFirstName") as Label;
+            Label lblLastNameStr = row.FindControl("lblLastName") as Label;
+            Label lblHoursStr = row.FindControl("lblHours") as Label;
+            Label lblDateStr = row.FindControl("lblDate") as Label;
+            Label lblAttendanceId = row.FindControl("lblAttendanceID") as Label;
+
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
+            myConnection.Open();
+            string selectStudentId = "select top 1 Student_ID from Student Where FirstName=@firstName AND LastName=@lastName";
+            SqlCommand SelectStudentIdCmd = new SqlCommand(selectStudentId, myConnection);
+            SelectStudentIdCmd.Parameters.AddWithValue("@firstName", lblFirstNameStr.Text);
+            SelectStudentIdCmd.Parameters.AddWithValue("@lastName", lblLastNameStr.Text);
+            SqlDataReader reader = SelectStudentIdCmd.ExecuteReader();
+            reader.Read();
+            int student_id = Convert.ToInt32(reader["Student_ID"]);
+            
+            string delete_attendance = "update attendance set Active='N' where Attendance_ID=@attendanceID";
+            SqlCommand deleteCommand = new SqlCommand(delete_attendance, myConnection);
+            deleteCommand.Parameters.AddWithValue("@attendanceID", lblAttendanceId.Text);
+            int return_val = deleteCommand.ExecuteNonQuery();
+            myConnection.Close();
+            if (return_val > 0)
+            {
+                ddlSelectSubject.SelectedIndex = -1;
+                ddlSelectStudent.SelectedIndex = -1;
+                ShowStudentAttendance();
+            }           
+        }
 
         protected void gdview_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            GridviewAttendance.EditIndex = -1;
+            GridViewRow row = GridviewAttendance.Rows[e.RowIndex];
+            TextBox newUserName = (TextBox)row.FindControl("txtFirstName");
+            TextBox newLastName = (TextBox)row.FindControl("txtLastName");
+            TextBox newHours = (TextBox)row.FindControl("txtHours");
+            TextBox newDate = (TextBox)row.FindControl("txtDate");
+            TextBox lblId = (TextBox)row.FindControl("txtAttendanceId");
+
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
+            myConnection.Open();
+            string updateStr = "Update Attendance SET Hours=@newHours, AttendanceDT=@newAttendance Where Attendance_ID=@newAttId";
+            SqlCommand updateCmd = new SqlCommand(updateStr, myConnection);
+            updateCmd.Parameters.AddWithValue("@newHours", newHours.Text);
+            updateCmd.Parameters.AddWithValue("@newAttendance", newDate.Text);
+            updateCmd.Parameters.AddWithValue("newAttId", lblId.Text);            
+            int return_val = updateCmd.ExecuteNonQuery();
+            myConnection.Close();
+            if (return_val > 0)
+            {
+                ddlSelectSubject.SelectedIndex = -1;
+                ddlSelectStudent.SelectedIndex = -1;
+                GridviewAttendance.EditIndex = -1;
+                ShowStudentAttendance();
+            }
         }
 
         protected void gdview_RowEditing(object sender, GridViewEditEventArgs e)
         {
-        
+            GridviewAttendance.EditIndex = e.NewEditIndex;
+            //ShowStudentAttendance();
         }
 
         protected void btnAttendanceSubmit_Click(object sender, EventArgs e)
@@ -116,10 +187,8 @@ namespace AttendanceProject
             int student_id = int.Parse(ddlSelectStudent.SelectedValue);
             int subject_id = int.Parse(ddlSelectSubject.SelectedValue);
             int hours = int.Parse(txtHours.Text);
-            //DateTime attendanceDate = DateTime.Parse(txtSelectDate.Text);
-            //booking.bookingDate = DateTime.ParseExact(datepicker.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-            DateTime attendanceDate = DateTime.ParseExact(txtSelectDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);            
-            string insert_attendance = "Insert into [dbo].[Attendance](Instructor_ID, Student_ID, Subject_ID, Hours) VALUES (@instructorId, @studentId, @subjectID, @hour)";
+            DateTime attendanceDate = DateTime.ParseExact(txtSelectDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            string insert_attendance = "Insert into [dbo].[Attendance](Instructor_ID, Student_ID, Subject_ID, Hours, AttendanceDT) VALUES (@instructorId, @studentId, @subjectID, @hour, @attendanceDate)";
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
             SqlCommand insertCommand = new SqlCommand(insert_attendance, myConnection);            
@@ -131,37 +200,24 @@ namespace AttendanceProject
             int return_val = insertCommand.ExecuteNonQuery();
             if (return_val > 0)
             {
-                lblStatusMessage.Text = "Attendance Added Sucessfully";
+                //lblStatusMessage.Text = "Attendance Added Sucessfully";
                 ddlSelectSubject.SelectedIndex = -1;
                 ddlSelectStudent.SelectedIndex = -1;
             }
             ShowStudentAttendance();
         }
 
-        protected void btnDeleteRecord_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void GridviewAttendance_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
-        }
-
-        protected void btnAddNewRecord_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        protected void btnShow_Click(object sender, EventArgs e)
-        {
-
+            
+            ShowStudentAttendance();
+            GridviewAttendance.PageIndex = e.NewPageIndex;
+            GridviewAttendance.DataBind();
         }
 
         protected void btnShowFiveFewest_Click(object sender, EventArgs e)
         {
-            string select_top_five_str = " select top 5 A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours desc";
+            string select_top_five_str = " select top 5 A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours";
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
 
@@ -177,7 +233,7 @@ namespace AttendanceProject
 
         protected void btnShowFiveMost_Click(object sender, EventArgs e)
         {
-            string select_top_five_str = " select top 5 A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours";
+            string select_top_five_str = " select top 5 A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours desc";
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
 
