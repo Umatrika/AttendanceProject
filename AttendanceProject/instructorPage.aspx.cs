@@ -7,6 +7,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.Configuration;
+using System.Configuration;
 
 namespace AttendanceProject
 {
@@ -18,8 +20,7 @@ namespace AttendanceProject
             if (!IsPostBack)
             {
                 string select_instructor = "Select Instructor_ID, FirstName from Instructor";
-                SqlConnection myConnection = new SqlConnection();
-                myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+                SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
                 myConnection.Open();
                 SqlCommand select_instructor_cmd = new SqlCommand(select_instructor, myConnection);
                 SqlDataReader rd_instructor = select_instructor_cmd.ExecuteReader();
@@ -61,8 +62,7 @@ namespace AttendanceProject
             if (!string.IsNullOrEmpty(Session["user"] as string)) 
             {
                 instructor_email = Session["user"].ToString();
-                SqlConnection myConnection = new SqlConnection();
-                myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+                SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
                 myConnection.Open();
 
                 string instructor_id_cmd = "select top 1 Instructor_ID from Instructor where Email = @instructor_email";
@@ -119,9 +119,8 @@ namespace AttendanceProject
             //DateTime attendanceDate = DateTime.Parse(txtSelectDate.Text);
             //booking.bookingDate = DateTime.ParseExact(datepicker.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             DateTime attendanceDate = DateTime.ParseExact(txtSelectDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);            
-            string insert_attendance = "Insert into [dbo].[Attendance](Instructor_ID, Student_ID, Subject_ID, Hours) VALUES (@instructorId, @studentId, @subjectID, @hour)";                
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            string insert_attendance = "Insert into [dbo].[Attendance](Instructor_ID, Student_ID, Subject_ID, Hours) VALUES (@instructorId, @studentId, @subjectID, @hour)";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
             SqlCommand insertCommand = new SqlCommand(insert_attendance, myConnection);            
             insertCommand.Parameters.AddWithValue("@instructorId", instructor_id);
@@ -163,8 +162,7 @@ namespace AttendanceProject
         protected void btnShowFiveFewest_Click(object sender, EventArgs e)
         {
             string select_top_five_str = " select top 5 A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours desc";
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
 
             SqlCommand select_top_cmd = new SqlCommand(select_top_five_str, myConnection);
@@ -180,8 +178,7 @@ namespace AttendanceProject
         protected void btnShowFiveMost_Click(object sender, EventArgs e)
         {
             string select_top_five_str = " select top 5 A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours";
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
 
             SqlCommand select_top_cmd = new SqlCommand(select_top_five_str, myConnection);

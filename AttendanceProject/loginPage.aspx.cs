@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.Configuration;
+using System.Configuration;
 
 namespace AttendanceProject
 {
@@ -27,15 +29,14 @@ namespace AttendanceProject
             }
             else
             {
-                SqlConnection myConnection = new SqlConnection();
-                myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+                SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);                
                 myConnection.Open();
-                string login_command = "SELECT Count(*) FROM [dbo].[Instructor] WHERE Email = @Email AND Password = @Password";
+                string login_command = "SELECT Count(*) FROM Instructor WHERE Email = @Email AND Password = @Password";
+                
                 SqlCommand myCommand = new SqlCommand(login_command, myConnection);
                 myCommand.Parameters.AddWithValue("@Email", txtUserName.Text);
-                myCommand.Parameters.AddWithValue("@Password", txtPassword.Text);
+                myCommand.Parameters.AddWithValue("@Password", txtPassword.Text);                              
                 Int32 return_status = (Int32)myCommand.ExecuteScalar();
-                lblErrorMessage.Text = "Connection Opened" + return_status;
                 myConnection.Close();
                 lblErrorMessage.Text = "";
                 if (return_status == 1)
@@ -62,8 +63,7 @@ namespace AttendanceProject
             string email = txtNewUserEmail.Text;
             string password = txtNewUserPassword.Text;
 
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
             string login_command = "SELECT Count(*) FROM [dbo].[Instructor] WHERE Email = @Email";
             SqlCommand myCommand = new SqlCommand(login_command, myConnection);
