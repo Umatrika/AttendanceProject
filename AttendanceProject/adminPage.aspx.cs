@@ -7,7 +7,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
-//using ClientScript.RegisterStartupScript;
+using System.Web.Configuration;
+using System.Configuration;
 
 namespace AttendanceProject
 {
@@ -50,8 +51,7 @@ namespace AttendanceProject
             string email = txtInstructorEmail.Text;
             string password = txtInstructorPassword.Text;   // check how to store it
 
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
             string select_command = "SELECT Count(*) FROM [dbo].[Instructor] WHERE Email = @EmailId";
             SqlCommand myCommand = new SqlCommand(select_command, myConnection);
@@ -92,8 +92,7 @@ namespace AttendanceProject
             string zip = txtStudentZip.Text;
             string note = txtStudentNotes.Text;
 
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
             string select_command = "SELECT Count(*) FROM [dbo].[Student] WHERE Email = @Email";
             SqlCommand myCommand = new SqlCommand(select_command, myConnection);
@@ -130,8 +129,7 @@ namespace AttendanceProject
         protected void btnCourseSubmit_Click(object sender, EventArgs e)
         {
             string subjectName = txtSubjectName.Text;
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFileName=C:\USERS\UMA PHANI\DOCUMENTS\GITHUB\ATTENDANCEPROJECT\ATTENDANCEPROJECT\APP_DATA\DB_UC.MDF;Integrated Security=True;MultipleActiveResultSets=True";
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
             string selectSubjectStr = "SELECT Count(*) FROM [dbo].[Subject] WHERE SubjectName = @subject";
             SqlCommand myCommand = new SqlCommand(selectSubjectStr, myConnection);

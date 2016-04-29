@@ -229,15 +229,6 @@ namespace AttendanceProject {
         protected global::System.Web.UI.WebControls.Button btnShowFiveMost;
         
         /// <summary>
-        /// btnDeleteRecord control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeleteRecord;
-        
-        /// <summary>
         /// GridviewAttendance control.
         /// </summary>
         /// <remarks>
