@@ -45,12 +45,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div id="headerDiv">
-        <div id="courseDiv" style="float:left; padding-left:10px;">
-            <asp:DropDownList ID="ddlSelectCourse" runat="server" Width="150" DataTextField="SubjectName" DataValueField="Subject_ID">                
-            </asp:DropDownList>
-            <asp:Button id="btnDropDropSelectOk" runat="server" Text="OK" OnClick="btnDropDropSelectOk_Click"/>
-        </div>
+    <div id="headerDiv">        
         <div id="searchDiv" style="float:right;">
             <asp:Button id="btnLogOut" runat="server" Text="Sign Out" OnClick="btnLogOut_Click"/>
         </div>        
@@ -121,6 +116,9 @@
             <asp:Button id="btnShowAllRecord" runat="server" Text="Show All" OnClick="btnShowAllRecord_Click"/>
             <asp:Button id="btnShowFiveFewest" runat="server" Text="Show Bottom 5" onclick="btnShowFiveFewest_Click"/>
             <asp:Button id="btnShowFiveMost" runat="server" Text="Show Top 5" OnClick="btnShowFiveMost_Click"/>
+            <asp:DropDownList ID="ddlSelectCourse" runat="server" Width="150" DataTextField="SubjectName" DataValueField="Subject_ID">                
+            </asp:DropDownList>
+            <asp:Button id="btnDropDropSelectOk" runat="server" Text="Select Course" OnClick="btnDropDropSelectOk_Click"/>
             <br />
             <asp:GridView ID ="GridviewAttendance" runat="server" allowpaging="True" CellPadding="4" BackColor="white" BorderWidth="1px" 
             ForeColor="black" BorderColor="#3366CC" AutoGenerateColumns="false" HeaderStyle-CssClass="grdView_HeaderStyle"
@@ -160,7 +158,17 @@
                             <asp:TextBox width="100%" runat="server" ID="txtLastName" text='<%# Bind("LastName") %>' Enabled="false"/>
                         </EditItemTemplate>
                         <ItemStyle Width="100px" />
-                    </asp:TemplateField>            
+                    </asp:TemplateField>
+                
+                    <asp:TemplateField HeaderText="Subject">
+                        <ItemTemplate>
+                            <asp:Label ID="lblSubject" runat="server" Text='<%# Eval("SubjectName") %>'></asp:Label> 
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox width="100%" runat="server" ID="txtHours" text='<%# Bind("SubjectName") %>' Enabled="false"/>
+                        </EditItemTemplate>
+                        <ItemStyle Width="100px" />
+                    </asp:TemplateField>        
                                                                  
                     <asp:TemplateField HeaderText="Hours">
                         <ItemTemplate>

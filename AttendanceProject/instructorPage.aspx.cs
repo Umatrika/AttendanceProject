@@ -43,7 +43,7 @@ namespace AttendanceProject
 
                 ddlSelectCourse.DataSource = ds;
                 ddlSelectCourse.DataBind();
-                ddlSelectCourse.Items.Insert(0, new ListItem("Select All", "0"));
+                ddlSelectCourse.Items.Insert(0, new ListItem("All Subjects", "0"));
 
                 myConnection.Close();
                 ShowStudentAttendance();
@@ -54,8 +54,10 @@ namespace AttendanceProject
         {
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
-            string select_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id AND Subject_ID=@subjectId";
-            string select_All_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id";
+            //string select_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id AND Subject_ID=@subjectId";
+            string select_string = "select * from (select A.Attendance_ID,A.Instructor_ID, A.STUDENT_ID, A.SUBJECT_ID, A.HOURS, A.AttendanceDT, B.FirstName,B.LastName from dbo.attendance A LEFT JOIN DBO.Student B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID WHERE D.ACTIVE='Y' AND c.Instructor_ID=@instructor_id AND c.Subject_ID=@subjectId";
+            //string select_All_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id";
+            string select_All_string = "select * from (select A.Attendance_ID,A.Instructor_ID, A.STUDENT_ID, A.SUBJECT_ID, A.HOURS, A.AttendanceDT, B.FirstName,B.LastName from dbo.attendance A LEFT JOIN DBO.Student B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID WHERE D.ACTIVE='Y' AND c.Instructor_ID=@instructor_id";
             Int32 ddlSelectedValue = Convert.ToInt32(ddlSelectCourse.SelectedValue);
             SqlCommand select;
             if(ddlSelectedValue == 0)
@@ -92,7 +94,8 @@ namespace AttendanceProject
                 int instructor_id = Convert.ToInt32(reader["Instructor_ID"]);
                 instructor_ID = instructor_id;
 
-                string select_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND A.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id order by A.Attendance_ID desc";
+                //string select_string = "select A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME, A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND A.ACTIVE='Y' AND INSTRUCTOR_ID=@instructor_id order by A.Attendance_ID desc";
+                string select_string = "select * from (select A.Attendance_ID,A.Instructor_ID, A.STUDENT_ID, A.SUBJECT_ID, A.HOURS, A.AttendanceDT, B.FirstName,B.LastName from dbo.attendance A LEFT JOIN DBO.Student B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID WHERE D.ACTIVE='Y' AND c.Instructor_ID=@instructor_id";
                 SqlCommand select = new SqlCommand(select_string, myConnection);
                 select.Parameters.AddWithValue("@instructor_id", instructor_id);
                 DataSet ds = new DataSet();
@@ -189,21 +192,30 @@ namespace AttendanceProject
             int hours = int.Parse(txtHours.Text);
             DateTime attendanceDate = DateTime.ParseExact(txtSelectDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             string insert_attendance = "Insert into [dbo].[Attendance](Instructor_ID, Student_ID, Subject_ID, Hours, AttendanceDT) VALUES (@instructorId, @studentId, @subjectID, @hour, @attendanceDate)";
+            string insert_subject_student = "Insert into Subject_Student(Subject_ID, Student_ID, RegisterDT) VALUES (@subjectID, @studentId, @attendanceDate)";
+
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
-            SqlCommand insertCommand = new SqlCommand(insert_attendance, myConnection);            
+            SqlCommand insertCommand = new SqlCommand(insert_attendance, myConnection);
+            SqlCommand insertSubjStudentCmd = new SqlCommand(insert_subject_student, myConnection);
             insertCommand.Parameters.AddWithValue("@instructorId", instructor_id);
             insertCommand.Parameters.AddWithValue("@studentId", student_id);
             insertCommand.Parameters.AddWithValue("@subjectID", subject_id);
             insertCommand.Parameters.AddWithValue("@hour", hours);
             insertCommand.Parameters.AddWithValue("@attendanceDate", attendanceDate);
+            insertSubjStudentCmd.Parameters.AddWithValue("@subjectID", subject_id);
+            insertSubjStudentCmd.Parameters.AddWithValue("@studentId", student_id);
+            insertSubjStudentCmd.Parameters.AddWithValue("@attendanceDate", attendanceDate);
             int return_val = insertCommand.ExecuteNonQuery();
             if (return_val > 0)
             {
-                //lblStatusMessage.Text = "Attendance Added Sucessfully";
                 ddlSelectSubject.SelectedIndex = -1;
                 ddlSelectStudent.SelectedIndex = -1;
             }
+            insertSubjStudentCmd.ExecuteNonQuery();
+            myConnection.Close();
+            txtHours.Text = "";
+            txtSelectDate.Text = "";
             ShowStudentAttendance();
         }
 
@@ -217,7 +229,8 @@ namespace AttendanceProject
 
         protected void btnShowFiveFewest_Click(object sender, EventArgs e)
         {
-            string select_top_five_str = " select top 5 A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours";
+            //string select_top_five_str = "select TOP 5 * from (select a.instructor_id, a.student_id, a.subject_id, b.FirstName,b.LastName,a.TotalHours from (select instructor_id, student_id, subject_id, SUM(hours) AS 'TotalHours' from dbo.attendance group by instructor_id, student_id, subject_id ) A LEFT JOIN DBO.STUDENT B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID where c.Instructor_ID =@instructor_id ORDER BY C.TotalHours";
+            string select_top_five_str = "select TOP 5 * from (select '-' as AttendanceDT, '-' as Attendance_ID, a.instructor_id, a.student_id, a.subject_id, b.FirstName,b.LastName,a.Hours from (select instructor_id, student_id, subject_id, SUM(hours) AS 'Hours' from dbo.attendance group by instructor_id, student_id, subject_id ) A LEFT JOIN DBO.STUDENT B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID where c.Instructor_ID =@instructor_id ORDER BY C.Hours";
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
 
@@ -233,7 +246,8 @@ namespace AttendanceProject
 
         protected void btnShowFiveMost_Click(object sender, EventArgs e)
         {
-            string select_top_five_str = " select top 5 A.Attendance_ID, A.Subject_ID, A.INSTRUCTOR_ID, A.STUDENT_ID, B.FIRSTNAME,B.LASTNAME,A.HOURS, A.AttendanceDT from attendance a LEFT JOIN STUDENT B ON A.Student_ID=B.Student_ID WHERE B.ACTIVE='Y' AND INSTRUCTOR_ID='2' order by Hours desc";
+            //string select_top_five_str = "select TOP 5 * from (select a.instructor_id, a.student_id, a.subject_id, b.FirstName,b.LastName,a.TotalHours from (select instructor_id, student_id, subject_id, SUM(hours) AS 'TotalHours' from dbo.attendance group by instructor_id, student_id, subject_id ) A LEFT JOIN DBO.STUDENT B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID where c.Instructor_ID=@instructor_id ORDER BY C.TotalHours desc";
+            string select_top_five_str = "select TOP 5 * from (select '-' as AttendanceDT, '-' as Attendance_ID, a.instructor_id, a.student_id, a.subject_id, b.FirstName,b.LastName,a.Hours from (select instructor_id, student_id, subject_id, SUM(hours) AS 'Hours' from dbo.attendance group by instructor_id, student_id, subject_id ) A LEFT JOIN DBO.STUDENT B ON A.STUDENT_ID=B.STUDENT_ID WHERE B.ACTIVE='Y') C LEFT JOIN DBO.SUBJECT D ON C.SUBJECT_ID=D.SUBJECT_ID where c.Instructor_ID =@instructor_id ORDER BY C.Hours DESC";
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
 

@@ -26,7 +26,21 @@ namespace AttendanceProject
                         Response.Redirect("loginPage.aspx");
                 }
                 else
+                {
                     Response.Redirect("loginPage.aspx");
+                }
+
+                SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
+                myConnection.Open();
+                string select_subject = "select Subject_ID, SubjectName from Subject Where Active='Y'";
+                SqlCommand select_subject_cmd = new SqlCommand(select_subject, myConnection);
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = select_subject_cmd;
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                ddlInstructorSubject.DataSource = ds;
+                ddlInstructorSubject.DataBind();
+                myConnection.Close();
             }
         }
 
@@ -43,16 +57,38 @@ namespace AttendanceProject
             ClientScript.RegisterStartupScript(this.GetType(), "pop", newWin, true);
         }
 
+        protected void updateSubjectInstructor(Int32 subjectId, string email)
+        {
+            SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
+            myConnection.Open();
+
+            string select_intructorId_str = "Select Instructor_ID from Instructor where Email=@email";
+            SqlCommand selectInstructorCmd = new SqlCommand(select_intructorId_str, myConnection);
+            selectInstructorCmd.Parameters.AddWithValue("@email", email);
+            SqlDataReader reader = selectInstructorCmd.ExecuteReader();
+            reader.Read();
+            int instructor_id = Convert.ToInt32(reader["Instructor_ID"]);
+
+            string updateSubjectInst = "Insert into Subject_Instructor (Subject_ID, Instructor_ID) Values (@subjectId, @instructorId) ";
+            SqlCommand updateSubInstCmd = new SqlCommand(updateSubjectInst, myConnection);
+            updateSubInstCmd.Parameters.AddWithValue("@subjectId", subjectId);
+            updateSubInstCmd.Parameters.AddWithValue("@instructorId", instructor_id);
+            updateSubInstCmd.ExecuteNonQuery();
+            myConnection.Close();
+        }
+
         protected void btnInstructorSubmit_Click(object sender, EventArgs e)
         {
             //Store Instructor Information in Database.
             string firstName = txtInstructorFirstName.Text;
             string lastName = txtInstructorLastName.Text;
             string email = txtInstructorEmail.Text;
-            string password = txtInstructorPassword.Text;   // check how to store it
+            string password = txtInstructorPassword.Text;
+            Int32 subjectId = Convert.ToInt32(ddlInstructorSubject.SelectedValue);
 
             SqlConnection myConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnectionString"].ConnectionString);
             myConnection.Open();
+
             string select_command = "SELECT Count(*) FROM [dbo].[Instructor] WHERE Email = @EmailId";
             SqlCommand myCommand = new SqlCommand(select_command, myConnection);
             myCommand.Parameters.AddWithValue("@EmailId", email);
@@ -60,7 +96,7 @@ namespace AttendanceProject
             if (return_status > 0)
             {
                 lblStudentErrorMessage.Text = "Instructor Exists Already.";
-                //lblInstructorErrorMessage.ForeColor = System.Drawing.Color.Red;
+                lblStudentErrorMessage.ForeColor = System.Drawing.Color.Red;
             }
             else
             {
@@ -74,9 +110,15 @@ namespace AttendanceProject
                 if (return_value > 0)
                 {
                     lblStudentErrorMessage.Text = "Instructor Added Sucessfully";
+                    lblStudentErrorMessage.ForeColor = System.Drawing.Color.Black;
+                    updateSubjectInstructor(subjectId, email);
                 }
             }
-            myConnection.Close();       
+            myConnection.Close();
+            txtInstructorFirstName.Text = "";
+            txtInstructorLastName.Text = "";
+            txtInstructorEmail.Text = "";
+            txtInstructorPassword.Text = "";
         }
 
         protected void btnStudentSubmit_Click(object sender, EventArgs e)
@@ -124,6 +166,16 @@ namespace AttendanceProject
                 }
             }
             myConnection.Close();
+            txtStudentFirstName.Text = "";
+            txtStudentLastName.Text = "";
+            txtStudentEmail.Text = "";
+            txtStudentDOB.Text = "";
+            txtStudentMobileNumber.Text = "";
+            txtStudentAddress.Text = "";
+            txtStudentCity.Text = "";
+            txtStudentState.Text = "";
+            txtStudentZip.Text = "";
+            txtStudentNotes.Text = "";            
         }
 
         protected void btnCourseSubmit_Click(object sender, EventArgs e)
@@ -155,10 +207,13 @@ namespace AttendanceProject
                 if (return_value > 0)
                 {
                     lblStudentErrorMessage.Text = "Subject Added Sucessfully";
+                    lblStudentErrorMessage.ForeColor = System.Drawing.Color.Black;
                 }
                
             }
             myConnection.Close();
+            txtSubjectName.Text = "";
+            txtCourseDescription.Text = "";
         }
     }
 }

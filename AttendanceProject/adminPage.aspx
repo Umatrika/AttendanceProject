@@ -221,7 +221,7 @@
         </asp:Panel>
         <asp:Panel id="Panel2" runat="server" CssClass="inlineBlock">
             <div id="divAddInstructor" class="block" runat="server" style="width:250px; height:250px; border:double; border-color:black;">
-                <asp:Button ID="btnAddInstructor" runat="server" Text="Add Instructor" CssClass="AddButton"/>
+                <asp:Button ID="btnAddInstructor" runat="server" Text="Add Instructor" CssClass="AddButton" />
                 <ajaxControlToolkit:ModalPopupExtender id="ajaxPopup" runat="server" popupcontrolId="pnlInstructorPopup" TargetControlID="btnAddInstructor"
                     cancelControlId="btnInstructorCancel" BackgroundCssClass="modalBackground">
                 </ajaxControlToolkit:ModalPopupExtender>
@@ -274,6 +274,12 @@
                                 <asp:RequiredFieldValidator ID="instructorPasswordValidator" runat="server" ErrorMessage="*"
                                      controlToValidate="txtInstructorPassword" ValidationGroup="instructorAdd" ForeColor="Red">
                                 </asp:RequiredFieldValidator>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>Subject</asp:TableCell>
+                            <asp:TableCell>
+                                <asp:DropDownList ID="ddlInstructorSubject" runat="server" width="175px" DataTextField="SubjectName" DataValueField="Subject_ID"></asp:DropDownList>
                             </asp:TableCell>
                         </asp:TableRow>
                         <asp:TableRow>
